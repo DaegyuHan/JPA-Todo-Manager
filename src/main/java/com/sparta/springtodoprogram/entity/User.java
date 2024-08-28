@@ -34,19 +34,23 @@ public class User extends Timestamed {
     @Column(nullable = false)
     private String password;        // 유저 password
 
+    private String token;           // JWT 토큰
+
     // Management table 과 1:N 관계
     @OneToMany(mappedBy = "user")
     private List<Management> managementList = new ArrayList<>();
 
-    public User(String userName, String userEmail, String password) {
+    public User(String userName, String userEmail, String password, String token) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.password = password;
+        this.token = token;
     }
 
 
-    public static User addUser(String userName, String userEmail, String password) {
-        return new User(userName, userEmail, password);
+
+    public static User addUser(String userName, String userEmail, String password, String token) {
+        return new User(userName, userEmail, password, token);
     }
 
     public void update(ToTalUserReqDto requestDto) {

@@ -12,6 +12,7 @@ public class TotalUserResDto {
     private String userEmail;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private String token;
 
     public TotalUserResDto(User user) {
         this.userId = user.getId();
@@ -19,5 +20,6 @@ public class TotalUserResDto {
         this.userEmail = user.getUserEmail();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
+        this.token = user.getToken();
     }
 }

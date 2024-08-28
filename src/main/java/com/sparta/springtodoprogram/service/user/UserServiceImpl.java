@@ -4,8 +4,11 @@ import com.sparta.springtodoprogram.config.PasswordEncoder;
 import com.sparta.springtodoprogram.dto.UserDto.ToTalUserReqDto;
 import com.sparta.springtodoprogram.dto.UserDto.TotalUserResDto;
 import com.sparta.springtodoprogram.entity.User;
+import com.sparta.springtodoprogram.entity.UserRoleEnum;
+import com.sparta.springtodoprogram.jwt.JwtUtil;
 import com.sparta.springtodoprogram.repository.TodoRepository;
 import com.sparta.springtodoprogram.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,12 +22,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     // 유저 등록
     @Override
     @Transactional
-    public TotalUserResDto createUser(ToTalUserReqDto requestDto) {
+    public TotalUserResDto createUser(ToTalUserReqDto requestDto, HttpServletResponse res) {
+        // JWT 생성
+        String token = jwtUtil.createToken(requestDto.getUserName(), UserRoleEnum.USER);
+        // JWT 쿠키 저장
+        jwtUtil.addJwtToCookie(token, res);
+
         String userName = requestDto.getUserName();
+        // 비밀번호 인코딩
         String password = passwordEncoder.encode(requestDto.getPassword());
 
         // 회원 중복 확인
@@ -41,7 +51,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // RequestDto -> Entity
-        User user = User.addUser(userName, userEmail, password);
+        User user = User.addUser(userName, userEmail, password, token);
         // DB 저장
         userRepository.save(user);
         // Entity -> ResponseDto

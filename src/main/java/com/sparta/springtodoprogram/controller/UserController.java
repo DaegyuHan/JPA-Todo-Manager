@@ -2,7 +2,9 @@ package com.sparta.springtodoprogram.controller;
 
 import com.sparta.springtodoprogram.dto.UserDto.ToTalUserReqDto;
 import com.sparta.springtodoprogram.dto.UserDto.TotalUserResDto;
+import com.sparta.springtodoprogram.jwt.JwtUtil;
 import com.sparta.springtodoprogram.service.user.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,8 @@ public class UserController {
 
     // 유저 등록
     @PostMapping("/user")
-    public TotalUserResDto createUser(@RequestBody  ToTalUserReqDto requestDto) {
-        return userService.createUser(requestDto);
+    public TotalUserResDto createUser(@RequestBody  ToTalUserReqDto requestDto, HttpServletResponse res) {
+        return userService.createUser(requestDto, res);
     }
 
     // 유저 단건 조회
