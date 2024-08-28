@@ -1,7 +1,8 @@
 package com.sparta.springtodoprogram.service.todo;
 
 import com.sparta.springtodoprogram.dto.todoDto.*;
-import com.sparta.springtodoprogram.dto.userDto.TodoAssignedUserDto;
+
+import com.sparta.springtodoprogram.dto.userDto.AssignedUserDto;
 import com.sparta.springtodoprogram.entity.Management;
 import com.sparta.springtodoprogram.entity.Todo;
 import com.sparta.springtodoprogram.entity.User;
@@ -51,7 +52,7 @@ public class TodoServiceImpl implements TodoService {
         List<Management> managementList = todo.getManagementList();
         // 2. 반복문 돌면서 managementList 안에 management 요소들에 접근
 
-        List<TodoAssignedUserDto> todoAssignedDtoList = managementList.stream().map(TodoAssignedUserDto::new).toList();
+        List<AssignedUserDto> todoAssignedDtoList = managementList.stream().map(AssignedUserDto::new).toList();
 
         InquiryTodoResDto inquiryTodoResDto = new InquiryTodoResDto(todo, todoAssignedDtoList);
         return inquiryTodoResDto;

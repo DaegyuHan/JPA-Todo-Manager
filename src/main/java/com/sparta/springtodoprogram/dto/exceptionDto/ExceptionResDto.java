@@ -1,4 +1,4 @@
-package com.sparta.springtodoprogram.dto.exception;
+package com.sparta.springtodoprogram.dto.exceptionDto;
 
 import lombok.Getter;
 

@@ -50,18 +50,28 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("중복된 Email 입니다.");
         }
 
+        // 입력받은 사용자 역할을 UserRoleEnum으로 변환
+        UserRoleEnum userRoleEnum;
+        try {
+            userRoleEnum = UserRoleEnum.valueOf(requestDto.getUserRole().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid user role provided.");
+        }
+
         // RequestDto -> Entity
         // Token 은 제외하고 전달
-        User user = User.addUser(userName, userEmail, password);
+        User user = User.addUser(userName, userEmail, password, userRoleEnum);
         // DB 저장
         userRepository.save(user);
+
+
         // JWT 생성
-        String token = jwtUtil.createToken(user.getUserEmail(), UserRoleEnum.USER);
+        String token = jwtUtil.createToken(user.getUserEmail(), userRoleEnum);
         // JWT 쿠키 저장
         jwtUtil.addJwtToCookie(token, res);
         // Entity -> ResponseDto
         // Token 출력을 위해 Dto 와 함께 전달
-        TotalUserResDto totalUserResDto = new TotalUserResDto(user, token);
+        TotalUserResDto totalUserResDto = new TotalUserResDto(user, token, userRoleEnum);
 
         return totalUserResDto;
     }
