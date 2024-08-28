@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Comment extends Timestamed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;                    // 댓글 ID
+    private long Id;                    // 댓글 ID
 
     private String commentContent;      // 댓글 내용
 

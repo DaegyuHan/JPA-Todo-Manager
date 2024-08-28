@@ -4,6 +4,8 @@ import com.sparta.springtodoprogram.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -12,4 +14,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
         return findById(id).orElseThrow(
                 () -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
     }
+
+    Optional<User> findByUserName(String userName);
+
+    Optional<User> findByuserEmail(String userEmail);
 }

@@ -1,5 +1,6 @@
 package com.sparta.springtodoprogram.service.user;
 
+import com.sparta.springtodoprogram.config.PasswordEncoder;
 import com.sparta.springtodoprogram.dto.UserDto.ToTalUserReqDto;
 import com.sparta.springtodoprogram.dto.UserDto.TotalUserResDto;
 import com.sparta.springtodoprogram.entity.User;
@@ -10,19 +11,37 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 유저 등록
     @Override
     @Transactional
     public TotalUserResDto createUser(ToTalUserReqDto requestDto) {
+        String userName = requestDto.getUserName();
+        String password = passwordEncoder.encode(requestDto.getPassword());
+
+        // 회원 중복 확인
+        Optional<User> checkUsername = userRepository.findByUserName(userName);
+        if (checkUsername.isPresent()) {
+            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+        }
+
+        // email 중복확인
+        String userEmail = requestDto.getUserEmail();
+        Optional<User> checkEmail = userRepository.findByuserEmail(userEmail);
+        if (checkEmail.isPresent()) {
+            throw new IllegalArgumentException("중복된 Email 입니다.");
+        }
+
         // RequestDto -> Entity
-        User user = new User(requestDto);
+        User user = User.addUser(userName, userEmail, password);
         // DB 저장
         userRepository.save(user);
         // Entity -> ResponseDto
@@ -30,6 +49,7 @@ public class UserServiceImpl implements UserService {
 
         return totalUserResDto;
     }
+
 
     // 유저 단건 조회
     @Override

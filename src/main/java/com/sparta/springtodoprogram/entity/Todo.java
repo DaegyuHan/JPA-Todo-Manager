@@ -22,7 +22,7 @@ public class Todo extends Timestamed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;                // 할일 ID
+    private long Id;                // 할일 ID
 
     // @Column(nullable = false, unique = true)
     private Long userId;            // 작성 유저ID
@@ -34,7 +34,7 @@ public class Todo extends Timestamed {
 
 
     // Comment table 과 1:N 관계
-    @OneToMany(mappedBy = "todo", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "todo", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private List<Comment> commentList = new ArrayList<>();
 
     // Management table 과 1:N 관계

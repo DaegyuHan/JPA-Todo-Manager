@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class TodoAssignedUserDto {
-    private Long userId;
+    private long userId;
     private String userName;
     private String userEmail;
 

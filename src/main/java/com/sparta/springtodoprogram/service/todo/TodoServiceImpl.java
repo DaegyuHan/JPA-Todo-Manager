@@ -47,15 +47,12 @@ public class TodoServiceImpl implements TodoService {
         // 해당 일정이 DB 에 존재하는지 확인
         Todo todo = todoRepository.findByIdOrElseThrow(id);
 
-        List<TodoAssignedUserDto> todoAssignedDtoList = new ArrayList<>();
 
         // 1. 해당 todoId 와 연결되어있는 Management table 에 접근
         List<Management> managementList = todo.getManagementList();
         // 2. 반복문 돌면서 managementList 안에 management 요소들에 접근
-        for (Management management : managementList) {
-            TodoAssignedUserDto todoAssignedUserDto = new TodoAssignedUserDto(management);
-            todoAssignedDtoList.add(todoAssignedUserDto);
-        }
+
+        List<TodoAssignedUserDto> todoAssignedDtoList = managementList.stream().map(TodoAssignedUserDto::new).toList();
 
         InquiryTodoResDto inquiryTodoResDto = new InquiryTodoResDto(todo, todoAssignedDtoList);
         return inquiryTodoResDto;

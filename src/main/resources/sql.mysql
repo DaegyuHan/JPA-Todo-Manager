@@ -1,0 +1,49 @@
+create table todo
+(
+    id           bigint auto_increment
+        primary key,
+    created_at   datetime(6)  null,
+    modified_at  datetime(6)  null,
+    todo_content varchar(255) null,
+    todo_title   varchar(255) null,
+    user_name    varchar(255) null,
+    user_id      bigint       null
+);
+
+create table comment
+(
+    id              bigint auto_increment
+        primary key,
+    created_at      datetime(6)  null,
+    modified_at     datetime(6)  null,
+    comment_content varchar(255) null,
+    user_name       varchar(255) null,
+    todo_id         bigint       null,
+    constraint FKj60kiatr37jebhtjaju6d5nv2
+        foreign key (todo_id) references todo (id)
+);
+
+create table user
+(
+    id          bigint auto_increment
+        primary key,
+    created_at  datetime(6)  null,
+    modified_at datetime(6)  null,
+    user_email  varchar(255) null,
+    user_name   varchar(255) null,
+    constraint UKj09k2v8lxofv2vecxu2hde9so
+        unique (user_email)
+);
+
+create table management
+(
+    id      bigint auto_increment
+        primary key,
+    todo_id bigint null,
+    user_id bigint null,
+    constraint FK87bsvelm5anugo3rcouq9cbig
+        foreign key (todo_id) references todo (id),
+    constraint FKkhg55e9osqkftq2c48q0h2dsb
+        foreign key (user_id) references user (id)
+);
+

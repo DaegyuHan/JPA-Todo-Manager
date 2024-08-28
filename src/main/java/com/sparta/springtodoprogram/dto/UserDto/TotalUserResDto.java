@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 public class TotalUserResDto {
-    private Long userId;
+    private long userId;
     private String userName;
     private String userEmail;
     private LocalDateTime createdAt;
