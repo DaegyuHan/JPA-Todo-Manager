@@ -1,4 +1,4 @@
-package com.sparta.springtodoprogram.dto.UserDto;
+package com.sparta.springtodoprogram.dto.userDto;
 
 import com.sparta.springtodoprogram.entity.User;
 import lombok.Getter;
@@ -20,6 +20,14 @@ public class TotalUserResDto {
         this.userEmail = user.getUserEmail();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
-        this.token = user.getToken();
+    }
+
+    public TotalUserResDto(User user, String token) {
+        this.userId = user.getId();
+        this.userName = user.getUserName();
+        this.userEmail = user.getUserEmail();
+        this.createdAt = user.getCreatedAt();
+        this.modifiedAt = user.getModifiedAt();
+        this.token = token;
     }
 }

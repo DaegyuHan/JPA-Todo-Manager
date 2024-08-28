@@ -11,11 +11,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // 해당 유저 조회
     default User findByIdOrElseThrow(Long id) {
-        return findById(id).orElseThrow(
-                () -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
+        return findById(id).
+                orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다."));
     }
 
     Optional<User> findByUserName(String userName);
 
-    Optional<User> findByuserEmail(String userEmail);
+    Optional<User> findByUserEmail(String userEmail);
+
 }

@@ -1,9 +1,7 @@
-package com.sparta.springtodoprogram.dto.TodoDto;
+package com.sparta.springtodoprogram.dto.todoDto;
 
-import com.sparta.springtodoprogram.dto.UserDto.TodoAssignedUserDto;
-import com.sparta.springtodoprogram.entity.Management;
+import com.sparta.springtodoprogram.dto.userDto.TodoAssignedUserDto;
 import com.sparta.springtodoprogram.entity.Todo;
-import com.sparta.springtodoprogram.entity.User;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

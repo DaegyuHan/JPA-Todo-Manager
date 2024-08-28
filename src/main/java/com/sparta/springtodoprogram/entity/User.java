@@ -1,15 +1,12 @@
 package com.sparta.springtodoprogram.entity;
 
-import com.sparta.springtodoprogram.dto.UserDto.ToTalUserReqDto;
+import com.sparta.springtodoprogram.dto.userDto.ToTalUserReqDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,17 +37,17 @@ public class User extends Timestamed {
     @OneToMany(mappedBy = "user")
     private List<Management> managementList = new ArrayList<>();
 
-    public User(String userName, String userEmail, String password, String token) {
+    public User(String userName, String userEmail, String password) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.password = password;
-        this.token = token;
+
     }
 
 
 
-    public static User addUser(String userName, String userEmail, String password, String token) {
-        return new User(userName, userEmail, password, token);
+    public static User addUser(String userName, String userEmail, String password) {
+        return new User(userName, userEmail, password);
     }
 
     public void update(ToTalUserReqDto requestDto) {

@@ -1,4 +1,4 @@
-package com.sparta.springtodoprogram.dto.CommentDto;
+package com.sparta.springtodoprogram.dto.commentDto;
 
 import com.sparta.springtodoprogram.entity.Comment;
 import lombok.Getter;

@@ -1,14 +1,13 @@
 package com.sparta.springtodoprogram.entity;
 
-import com.sparta.springtodoprogram.dto.TodoDto.RegistTodoReqDto;
-import com.sparta.springtodoprogram.dto.TodoDto.UpdateTodoReqDto;
+import com.sparta.springtodoprogram.dto.todoDto.RegistTodoReqDto;
+import com.sparta.springtodoprogram.dto.todoDto.UpdateTodoReqDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

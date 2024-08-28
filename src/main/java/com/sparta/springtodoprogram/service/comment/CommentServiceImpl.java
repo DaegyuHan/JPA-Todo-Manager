@@ -1,6 +1,6 @@
 package com.sparta.springtodoprogram.service.comment;
 
-import com.sparta.springtodoprogram.dto.CommentDto.*;
+import com.sparta.springtodoprogram.dto.commentDto.*;
 import com.sparta.springtodoprogram.entity.Comment;
 import com.sparta.springtodoprogram.entity.Todo;
 import com.sparta.springtodoprogram.repository.CommentRepository;

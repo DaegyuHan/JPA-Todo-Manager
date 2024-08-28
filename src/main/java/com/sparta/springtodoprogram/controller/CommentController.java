@@ -1,6 +1,6 @@
 package com.sparta.springtodoprogram.controller;
 
-import com.sparta.springtodoprogram.dto.CommentDto.*;
+import com.sparta.springtodoprogram.dto.commentDto.*;
 import com.sparta.springtodoprogram.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

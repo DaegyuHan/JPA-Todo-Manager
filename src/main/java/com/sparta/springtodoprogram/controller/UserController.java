@@ -1,8 +1,9 @@
 package com.sparta.springtodoprogram.controller;
 
-import com.sparta.springtodoprogram.dto.UserDto.ToTalUserReqDto;
-import com.sparta.springtodoprogram.dto.UserDto.TotalUserResDto;
-import com.sparta.springtodoprogram.jwt.JwtUtil;
+import com.sparta.springtodoprogram.dto.userDto.LoginUserReqDto;
+import com.sparta.springtodoprogram.dto.userDto.LoginUserResDto;
+import com.sparta.springtodoprogram.dto.userDto.ToTalUserReqDto;
+import com.sparta.springtodoprogram.dto.userDto.TotalUserResDto;
 import com.sparta.springtodoprogram.service.user.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,16 @@ public class UserController {
 
     private final UserService userService;
 
-    // 유저 등록
-    @PostMapping("/user")
+    // 유저 등록 ( 회원가입 )
+    @PostMapping("/user/signup")
     public TotalUserResDto createUser(@RequestBody  ToTalUserReqDto requestDto, HttpServletResponse res) {
         return userService.createUser(requestDto, res);
+    }
+
+    // 유저 로그인
+    @PostMapping("/user/login")
+    public ResponseEntity<LoginUserResDto> loginUser(@RequestBody LoginUserReqDto requestDto, HttpServletResponse res) {
+        return ResponseEntity.ok(userService.loginUser(requestDto, res));
     }
 
     // 유저 단건 조회

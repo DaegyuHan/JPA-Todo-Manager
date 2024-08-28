@@ -1,23 +1,28 @@
-package com.sparta.springtodoprogram.dto.TodoDto;
+package com.sparta.springtodoprogram.dto.todoDto;
 
 import com.sparta.springtodoprogram.entity.Todo;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
-public class InquiryTodosResDto {
-    private Long userId;
+public class UpdateTodoResDto {
+    private long Id;
+    private long userId;
     private String todoTitle;
     private String todoContent;
+    private List<Long> assignedUserIds;
     private LocalDateTime modifiedAt;
-    private Long commentCount;
 
-    public InquiryTodosResDto(Todo todo) {
+    public UpdateTodoResDto(Todo todo) {
+        this.Id = todo.getId();
         this.userId = todo.getUserId();
         this.todoTitle = todo.getTodoTitle();
         this.todoContent = todo.getTodoContent();
+        this.assignedUserIds = todo.getManagementList().stream().map(management
+                -> management.getUser().getId()).toList() ;
         this.modifiedAt = todo.getModifiedAt();
-        this.commentCount = (long) todo.getCommentCount();
+
     }
 }

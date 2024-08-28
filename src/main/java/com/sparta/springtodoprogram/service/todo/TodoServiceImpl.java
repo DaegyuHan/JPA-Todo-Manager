@@ -1,7 +1,7 @@
 package com.sparta.springtodoprogram.service.todo;
 
-import com.sparta.springtodoprogram.dto.TodoDto.*;
-import com.sparta.springtodoprogram.dto.UserDto.TodoAssignedUserDto;
+import com.sparta.springtodoprogram.dto.todoDto.*;
+import com.sparta.springtodoprogram.dto.userDto.TodoAssignedUserDto;
 import com.sparta.springtodoprogram.entity.Management;
 import com.sparta.springtodoprogram.entity.Todo;
 import com.sparta.springtodoprogram.entity.User;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,7 +76,7 @@ public class TodoServiceImpl implements TodoService {
     public UpdateTodoResDto updateTodo(Long id, UpdateTodoReqDto requestDto) {
         // 해당 일정이 DB 에 존재하는지 확인
         Todo todo = todoRepository.findByIdOrElseThrow(id);
-        // 입력받은 담당자와 유저테이블 비교
+        // 지정한 담당자들이 유저테이블에 있는지 확인
         for (Long assignedUserId : requestDto.getAssignedUserIds()) {
             User user = userRepository.findById(assignedUserId)
                     .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다"));

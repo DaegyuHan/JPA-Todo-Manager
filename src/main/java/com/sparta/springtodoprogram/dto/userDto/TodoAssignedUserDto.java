@@ -1,4 +1,4 @@
-package com.sparta.springtodoprogram.dto.UserDto;
+package com.sparta.springtodoprogram.dto.userDto;
 
 import com.sparta.springtodoprogram.entity.Management;
 import lombok.Getter;

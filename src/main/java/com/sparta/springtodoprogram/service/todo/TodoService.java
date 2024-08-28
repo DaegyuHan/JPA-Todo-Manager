@@ -1,7 +1,6 @@
 package com.sparta.springtodoprogram.service.todo;
 
-import com.sparta.springtodoprogram.dto.TodoDto.*;
-import jakarta.servlet.http.HttpServletResponse;
+import com.sparta.springtodoprogram.dto.todoDto.*;
 
 import java.util.List;
 

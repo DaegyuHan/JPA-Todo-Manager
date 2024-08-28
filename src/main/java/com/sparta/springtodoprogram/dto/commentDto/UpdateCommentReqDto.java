@@ -1,9 +1,9 @@
-package com.sparta.springtodoprogram.dto.CommentDto;
+package com.sparta.springtodoprogram.dto.commentDto;
 
 import lombok.Getter;
 
 @Getter
-public class RegistCommentReqDto {
+public class UpdateCommentReqDto {
     private String commentContent;
     private String userName;
 }
