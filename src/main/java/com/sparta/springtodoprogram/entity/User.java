@@ -33,7 +33,6 @@ public class User extends Timestamed {
     @Column(nullable = false)
     private String password;        // 유저 password
 
-    private String token;           // JWT 토큰
 
     // Management table 과 1:N 관계
     @OneToMany(mappedBy = "user")
