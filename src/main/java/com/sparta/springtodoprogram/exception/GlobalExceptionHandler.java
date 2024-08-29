@@ -1,6 +1,6 @@
 package com.sparta.springtodoprogram.exception;
 
-import com.sparta.springtodoprogram.dto.exception.ExceptionResDto;
+import com.sparta.springtodoprogram.dto.exceptionDto.ExceptionResDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
