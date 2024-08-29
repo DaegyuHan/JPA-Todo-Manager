@@ -1,5 +1,4 @@
 # JPA-Todo-Manager
-과제 9-1 단계 완료
 -API 명세서
 Todo
 
