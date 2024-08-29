@@ -28,7 +28,8 @@ public class User extends Timestamed {
     @Column(nullable = false, unique = true)
     private String userEmail;       // 유저 Email
 
-    private String userRole;            // 사용자 권한
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;            // 사용자 권한
 
     @Column(nullable = false)
     private String password;        // 유저 password
@@ -38,17 +39,17 @@ public class User extends Timestamed {
     @OneToMany(mappedBy = "user")
     private List<Management> managementList = new ArrayList<>();
 
-    public User(String userName, String userEmail, String password, UserRoleEnum userRoleEnum) {
+    public User(String userName, String userEmail, String password, UserRole userRole) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.password = password;
-        this.userRole = String.valueOf(userRoleEnum);
+        this.userRole = userRole;
     }
 
 
 
-    public static User addUser(String userName, String userEmail, String password, UserRoleEnum userRoleEnum) {
-        return new User(userName, userEmail, password, userRoleEnum);
+    public static User addUser(String userName, String userEmail, String password, UserRole userRole) {
+        return new User(userName, userEmail, password, userRole);
     }
 
     public void update(ToTalUserReqDto requestDto) {

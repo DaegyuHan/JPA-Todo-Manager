@@ -25,17 +25,21 @@ public class TodoServiceImpl implements TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
     private final ManagementRepository managementRepository;
+    private final TodoWeatherService todoWeatherService;
 
     // 일정 등록
     @Override
     @Transactional
     public RegistTodoResDto createTodo(RegistTodoReqDto requestDto) {
+
+        String todayWeateher = todoWeatherService.getTodayWeather();
+
         // RequestDto -> Entity
-        Todo todo = new Todo(requestDto);
+        Todo todo = new Todo(requestDto, todayWeateher);
         // DB 저장
         todoRepository.save(todo);
         // Entity -> ResponseDto
-        RegistTodoResDto registTodoResDto = new RegistTodoResDto(todo);
+        RegistTodoResDto registTodoResDto = new RegistTodoResDto(todo, todayWeateher);
 
         return registTodoResDto;
     }

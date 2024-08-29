@@ -30,6 +30,8 @@ public class Todo extends Timestamed {
 
     private String todoContent;         // 할일 내용
 
+    private String weather;
+
 
 
     // Comment table 과 1:N 관계
@@ -40,16 +42,18 @@ public class Todo extends Timestamed {
     @OneToMany(mappedBy = "todo",fetch = FetchType.LAZY)
     private List<Management> managementList = new ArrayList<>();
 
+
     // 해당 일정의 댓글 개수
     @Transient
     public int getCommentCount() {
         return commentList.size();
     }
 
-    public Todo(RegistTodoReqDto requestDto) {
+    public Todo(RegistTodoReqDto requestDto,  String todayWeateher) {
         this.userId = requestDto.getUserId();
         this.todoTitle = requestDto.getTodoTitle();
         this.todoContent = requestDto.getTodoContent();
+        this.weather = todayWeateher;
     }
 
     public void update(UpdateTodoReqDto requestDto) {

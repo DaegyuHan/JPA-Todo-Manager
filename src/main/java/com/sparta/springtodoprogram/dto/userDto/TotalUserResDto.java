@@ -1,7 +1,7 @@
 package com.sparta.springtodoprogram.dto.userDto;
 
 import com.sparta.springtodoprogram.entity.User;
-import com.sparta.springtodoprogram.entity.UserRoleEnum;
+import com.sparta.springtodoprogram.entity.UserRole;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -24,11 +24,11 @@ public class TotalUserResDto {
         this.modifiedAt = user.getModifiedAt();
     }
 
-    public TotalUserResDto(User user, String token, UserRoleEnum userRoleEnum) {
+    public TotalUserResDto(User user, String token, UserRole userRole) {
         this.userId = user.getId();
         this.userName = user.getUserName();
         this.userEmail = user.getUserEmail();
-        this.userRole = String.valueOf(userRoleEnum);
+        this.userRole = String.valueOf(userRole);
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
         this.token = token;

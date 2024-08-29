@@ -6,7 +6,8 @@ import com.sparta.springtodoprogram.dto.userDto.LoginUserResDto;
 import com.sparta.springtodoprogram.dto.userDto.ToTalUserReqDto;
 import com.sparta.springtodoprogram.dto.userDto.TotalUserResDto;
 import com.sparta.springtodoprogram.entity.User;
-import com.sparta.springtodoprogram.entity.UserRoleEnum;
+import com.sparta.springtodoprogram.entity.UserRole;
+import com.sparta.springtodoprogram.exception.AuthException;
 import com.sparta.springtodoprogram.jwt.JwtUtil;
 import com.sparta.springtodoprogram.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    // 유저 등록
+    // 유저 등록 ( 회원가입 )
     @Override
     @Transactional
     public TotalUserResDto createUser(ToTalUserReqDto requestDto, HttpServletResponse res) {
@@ -40,38 +41,35 @@ public class UserServiceImpl implements UserService {
         // 회원 중복 확인
         Optional<User> checkUsername = userRepository.findByUserName(userName);
         if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+            throw new AuthException("중복된 사용자가 존재합니다.");
         }
 
         // email 중복확인
         String userEmail = requestDto.getUserEmail();
         Optional<User> checkEmail = userRepository.findByUserEmail(userEmail);
         if (checkEmail.isPresent()) {
-            throw new IllegalArgumentException("중복된 Email 입니다.");
+            throw new AuthException("중복된 Email 입니다.");
         }
 
-        // 입력받은 사용자 역할을 UserRoleEnum으로 변환
-        UserRoleEnum userRoleEnum;
-        try {
-            userRoleEnum = UserRoleEnum.valueOf(requestDto.getUserRole().toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid user role provided.");
-        }
 
         // RequestDto -> Entity
         // Token 은 제외하고 전달
-        User user = User.addUser(userName, userEmail, password, userRoleEnum);
+        User user = User.addUser(userName, userEmail, password, convertToUserRole(requestDto.getUserRole()));
         // DB 저장
-        userRepository.save(user);
+        User saveuser = userRepository.save(user);
 
 
-        // JWT 생성
-        String token = jwtUtil.createToken(user.getUserEmail(), userRoleEnum);
-        // JWT 쿠키 저장
-        jwtUtil.addJwtToCookie(token, res);
+        // JWT 생성 및 저장
+        String token = jwtUtil.createToken(
+                saveuser.getId(),
+                saveuser.getUserName(),
+                saveuser.getUserEmail(),
+               saveuser.getUserRole());
+
+
         // Entity -> ResponseDto
         // Token 출력을 위해 Dto 와 함께 전달
-        TotalUserResDto totalUserResDto = new TotalUserResDto(user, token, userRoleEnum);
+        TotalUserResDto totalUserResDto = new TotalUserResDto(user, token, convertToUserRole(requestDto.getUserRole()));
 
         return totalUserResDto;
     }
@@ -85,17 +83,16 @@ public class UserServiceImpl implements UserService {
 
         // 사용자 확인
         User user = userRepository.findByUserEmail(userEmail).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "이메일을 확인해주세요.")
+                () -> new AuthException("가입되지 않은 유저입니다..")
         );
 
         // 비밀번호 확인
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+            throw new AuthException("비밀번호가 일치하지 않습니다.");
         }
 
         // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
-        String token = jwtUtil.createToken(user.getUserName(), UserRoleEnum.USER);
-        jwtUtil.addJwtToCookie(token, res);
+        String token = jwtUtil.createToken(user.getId(), user.getUserName(), user.getUserEmail(), user.getUserRole());
 
         return new LoginUserResDto(user, token);
     }
@@ -137,5 +134,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByIdOrElseThrow(id);
         // 유저 삭제
         userRepository.delete(user);
+    }
+
+    private UserRole convertToUserRole(String userRoleString) {
+        try {
+            return UserRole.valueOf(userRoleString.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid user role provided.");
+        }
     }
 }

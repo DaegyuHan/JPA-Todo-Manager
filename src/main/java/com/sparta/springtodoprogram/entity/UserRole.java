@@ -1,12 +1,12 @@
 package com.sparta.springtodoprogram.entity;
 
-public enum UserRoleEnum {
+public enum UserRole {
     USER(Authority.USER),  // 사용자 권한
     ADMIN(Authority.ADMIN);  // 관리자 권한
 
     private final String authority;
 
-    UserRoleEnum(String authority) {
+    UserRole(String authority) {
         this.authority = authority;
     }
 

@@ -21,4 +21,5 @@ public interface TodoRepository  extends JpaRepository<Todo, Long> {
 
     // 일정 전체 조회 시에 내림차순 정렬
     Page<Todo> findAllByOrderByModifiedAtDesc(Pageable pageable);
+
 }
