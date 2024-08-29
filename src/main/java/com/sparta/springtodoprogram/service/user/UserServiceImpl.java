@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
+    // Role 을 String 으로 변환
     private UserRole convertToUserRole(String userRoleString) {
         try {
             return UserRole.valueOf(userRoleString.toUpperCase());

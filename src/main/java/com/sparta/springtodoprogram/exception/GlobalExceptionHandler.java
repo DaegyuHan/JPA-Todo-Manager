@@ -1,5 +1,9 @@
 package com.sparta.springtodoprogram.exception;
 
+<<<<<<< HEAD
+=======
+import com.sparta.springtodoprogram.dto.exceptionDto.ExceptionResDto;
+>>>>>>> 00365dd12d4cd3a80467d354189bcca4da5f88c5
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
