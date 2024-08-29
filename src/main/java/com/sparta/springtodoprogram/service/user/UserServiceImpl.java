@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
         // 사용자 확인
         User user = userRepository.findByUserEmail(userEmail).orElseThrow(
-                () -> new AuthException("가입되지 않은 유저입니다..")
+                () -> new AuthException("가입되지 않은 유저입니다.")
         );
 
         // 비밀번호 확인
