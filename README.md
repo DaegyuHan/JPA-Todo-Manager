@@ -13,6 +13,7 @@ User
 ![User](https://github.com/user-attachments/assets/8aa5949f-8fd7-4094-b643-b712d493dfb4)
 
 
--ERD
+-ERD ( + Comment 와 User Table 연관 설정 추가 )
 
-![2](https://github.com/user-attachments/assets/870ed1ab-8883-41a4-91b1-ac83af8fa4e6)
+![image](https://github.com/user-attachments/assets/cfe4e637-9503-4dd6-866b-5ad41c1a224a)
+
