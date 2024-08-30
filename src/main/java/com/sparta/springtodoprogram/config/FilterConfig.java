@@ -1,7 +1,5 @@
 package com.sparta.springtodoprogram.config;
 
-import com.sparta.springtodoprogram.filter.JwtFilter;
-import com.sparta.springtodoprogram.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
