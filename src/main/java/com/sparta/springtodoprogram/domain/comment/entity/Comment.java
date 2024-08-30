@@ -4,6 +4,7 @@ import com.sparta.springtodoprogram.domain.comment.dto.request.RegistCommentReqD
 import com.sparta.springtodoprogram.domain.comment.dto.request.UpdateCommentReqDto;
 import com.sparta.springtodoprogram.config.Timestamed;
 import com.sparta.springtodoprogram.domain.todo.entity.Todo;
+import com.sparta.springtodoprogram.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,21 +24,31 @@ public class Comment extends Timestamed {
     private long Id;                    // 댓글 ID
 
     private String commentContent;      // 댓글 내용
-    private String userName;            // 작성 유저명
-
+    private String userName;            // 댓글 작성자 유저 Name
 
 
     @ManyToOne
     @JoinColumn(name = "todo_id")
     private Todo todo;
 
-    public Comment(RegistCommentReqDto requestDto) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
+    public Comment(RegistCommentReqDto requestDto, String userName) {
         this.commentContent = requestDto.getCommentContent();
-        this.userName = requestDto.getUserName();
+        this.userName = userName;
     }
 
-    public void update(UpdateCommentReqDto requestDto) {
+    public static Comment addComment(RegistCommentReqDto requestDto, String userName) {
+        return new Comment(requestDto, userName);
+    }
+
+
+    public void update(UpdateCommentReqDto requestDto, String userName) {
         this.commentContent = requestDto.getCommentContent();
-        this.userName = requestDto.getUserName();
+        this.userName = userName;
     }
 }

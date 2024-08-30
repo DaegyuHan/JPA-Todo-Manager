@@ -21,8 +21,8 @@ public class CommentController {
 
     // 댓글 등록
     @PostMapping("/comment")
-    public RegistCommentResDto createComment(@PathVariable Long todoId, @RequestBody RegistCommentReqDto requestDto) {
-        return commentService.createComment(todoId, requestDto);
+    public ResponseEntity<RegistCommentResDto> createComment(@PathVariable Long todoId, @RequestBody RegistCommentReqDto requestDto) {
+        return ResponseEntity.ok(commentService.createComment(todoId, requestDto));
     }
 
     //댓글 단건 조회

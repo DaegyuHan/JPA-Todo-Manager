@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class RegistCommentReqDto {
     private String commentContent;
-    private String userName;
+    private Long userId;
 }

@@ -1,5 +1,6 @@
 package com.sparta.springtodoprogram.domain.user.entity;
 
+import com.sparta.springtodoprogram.domain.comment.entity.Comment;
 import com.sparta.springtodoprogram.domain.user.dto.request.ToTalUserReqDto;
 import com.sparta.springtodoprogram.config.management.Management;
 import com.sparta.springtodoprogram.config.Timestamed;
@@ -25,7 +26,6 @@ public class User extends Timestamed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;                // 유저 ID
 
-
     private String userName;        // 유저 이름
 
     @Column(nullable = false, unique = true)
@@ -37,6 +37,8 @@ public class User extends Timestamed {
     @Column(nullable = false)
     private String password;        // 유저 password
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> commentList = new ArrayList<>();
 
     // Management table 과 1:N 관계
     @OneToMany(mappedBy = "user")

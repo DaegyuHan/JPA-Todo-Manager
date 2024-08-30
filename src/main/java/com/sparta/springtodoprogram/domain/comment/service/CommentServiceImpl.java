@@ -9,6 +9,8 @@ import com.sparta.springtodoprogram.domain.comment.entity.Comment;
 import com.sparta.springtodoprogram.domain.todo.entity.Todo;
 import com.sparta.springtodoprogram.domain.comment.repository.CommentRepository;
 import com.sparta.springtodoprogram.domain.todo.repository.TodoRepository;
+import com.sparta.springtodoprogram.domain.user.entity.User;
+import com.sparta.springtodoprogram.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,16 +22,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
 
-    private  final TodoRepository todoRepository;
+    private final TodoRepository todoRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
 
     // 댓글 등록
     @Override
     public RegistCommentResDto createComment(Long todoId, RegistCommentReqDto requestDto) {
         // 해당 일정이 있는지 조회
         Todo todo = todoRepository.findByIdOrElseThrow(todoId);
+
+        // 해당 유저가 있는지 조회
+        User user = userRepository.findByIdOrElseThrow(requestDto.getUserId());
+
         // RequestDto -> Entity
-        Comment comment = new Comment(requestDto);
+        Comment comment = Comment.addComment(requestDto, user.getUserName());
         // Todo에 comment 연관 설정
         todo.addComment(comment);
         // DB 저장
@@ -67,9 +74,10 @@ public class CommentServiceImpl implements CommentService{
     public UpdateCommentResDto updateComment(Long todoId, Long commentId, UpdateCommentReqDto requestDto) {
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글이 없습니다."));
+        User user = userRepository.findById(requestDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
 
         if (comment.getTodo() != null && Objects.equals(comment.getTodo().getId(), todoId)) {
-            comment.update(requestDto);
+            comment.update(requestDto, user.getUserName());
         } else {
             throw new IllegalArgumentException("원하는 댓글이 없습니다.");
         }
